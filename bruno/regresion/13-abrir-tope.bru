@@ -1,0 +1,26 @@
+meta {
+  name: Abrir ticket para tope
+  type: http
+  seq: 13
+}
+
+post {
+  url: {{baseUrl}}/tickets
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "placa": "C789GHI",
+    "entrada": "2026-10-22T08:00:00"
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+script:post-response {
+  bru.setVar("topeId", res.body.id);
+}

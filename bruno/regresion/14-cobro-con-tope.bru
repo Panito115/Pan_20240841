@@ -1,0 +1,23 @@
+meta {
+  name: Cobro con tope de Q60
+  type: http
+  seq: 14
+}
+
+post {
+  url: {{baseUrl}}/tickets/{{topeId}}/salida
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "salida": "2026-10-22T14:01:00"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.minutos: eq 361
+  res.body.monto: eq 60
+}
