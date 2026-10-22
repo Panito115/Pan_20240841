@@ -19,6 +19,7 @@ from pydantic import BaseModel, field_validator
 
 GRACIA_MIN = 15
 TARIFA_HORA = 10
+TOPE = 60
 PLACA = re.compile(r"^[PMC]\d{3}[A-Z]{3}$")
 
 app = FastAPI(title="parqueo")
@@ -47,7 +48,7 @@ def cobrar(minutos: int) -> int:
     if minutos <= GRACIA_MIN:
         return 0
     horas = math.ceil(minutos / 60)
-    return horas * TARIFA_HORA
+    return min(horas * TARIFA_HORA, TOPE)
 
 
 def get_or_404(ticket_id: int) -> dict:
